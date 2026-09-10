@@ -1,0 +1,451 @@
+/*
+  Sizing/spacing below is derived from the Figma frame at its 1440px baseline
+  (node 2941:1449). Every clamp() is calibrated as clamp(min, Xvw, target)
+  where X = target-px / 14.4, so the value hits the exact Figma spec at a
+  1440px viewport and scales proportionally below/above it.
+*/
+
+.pe-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-white);
+  padding-bottom: clamp(32px, 6.74vw, 97px);
+  isolation: isolate;
+}
+
+/* Desktop: purely a passthrough so .pe-hero__bg/__photo/__overlay lay out
+   as direct children of .pe-hero, exactly as before. Mobile repurposes it
+   as the cropped photo-banner box (see the <900px block at the bottom). */
+.pe-hero__banner {
+  display: contents;
+}
+
+.pe-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: bottom;
+  opacity: 0.7;
+  z-index: 0;
+}
+
+.pe-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, #fff 0%, #fff 42%, rgba(255, 255, 255, 0.55) 58%, rgba(255, 255, 255, 0) 72%);
+  z-index: 2;
+}
+
+.pe-hero__map {
+  position: absolute;
+  left: 0;
+  top: clamp(70px, 12.43vw, 179px);
+  width: min(66%, 950px);
+  height: auto;
+  opacity: 0.45;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Header */
+
+.pe-header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(20px, 3.4vw, 49px) clamp(20px, 5.76vw, 83px) 0;
+}
+
+.pe-header__logo {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.pe-header__logo img {
+  width: clamp(150px, 20.76vw, 299px);
+  height: auto;
+}
+
+.pe-header__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 6;
+}
+
+.pe-header__toggle span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--color-text-dark);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.pe-header__toggle.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.pe-header__toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.pe-header__toggle.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.pe-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.78vw, 40px);
+}
+
+.pe-nav a {
+  font: 600 clamp(0.9rem, 1.25vw, 1.125rem) var(--font-body);
+  color: var(--color-text-dark);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.pe-nav a.is-active {
+  color: var(--color-navy);
+}
+
+.pe-nav__cta {
+  background: var(--color-orange);
+  color: var(--color-white) !important;
+  padding: 12px 28px;
+  border-radius: 70px;
+}
+
+/* Content */
+
+.pe-hero__content {
+  position: relative;
+  z-index: 5;
+  padding: clamp(28px, 5.625vw, 81px) clamp(20px, 5.76vw, 83px) 0;
+}
+
+.pe-hero__eyebrow {
+  font: 600 clamp(1rem, 1.944vw, 1.75rem) var(--font-body);
+  color: var(--color-text-muted);
+  margin-bottom: clamp(8px, 1.39vw, 20px);
+}
+
+.pe-hero__heading {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  margin-bottom: clamp(10px, 1.67vw, 24px);
+}
+
+.pe-hero__heading-accent {
+  color: var(--color-navy);
+  font-size: clamp(2.1rem, 4.583vw, 4.125rem);
+}
+
+.pe-hero__heading-base {
+  color: var(--color-text-body);
+  font-size: clamp(1.8rem, 4.097vw, 3.6875rem);
+}
+
+.pe-hero__divider {
+  display: block;
+  width: 99px;
+  max-width: 30%;
+  height: 8px;
+  background: var(--color-orange-alt);
+  margin: 0 0 clamp(14px, 2.22vw, 32px);
+}
+
+.pe-hero__lead {
+  font: 600 clamp(1.05rem, 1.806vw, 1.625rem) / 1.3 var(--font-body);
+  color: var(--color-text-body);
+  max-width: 471px;
+}
+
+.pe-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(18px, 2.5vw, 36px);
+}
+
+.pe-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 17px 28px 17px 32px;
+  border-radius: 70px;
+  font: 600 clamp(0.95rem, 1.389vw, 1.25rem) var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.pe-btn--primary {
+  background: var(--color-orange);
+  color: var(--color-white);
+}
+
+.pe-btn__arrow {
+  flex-shrink: 0;
+}
+
+.pe-btn--secondary {
+  background: var(--color-surface-muted);
+  border-color: var(--color-navy);
+  color: var(--color-navy);
+}
+
+.pe-hero__stat {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(24px, 4.03vw, 58px);
+}
+
+.pe-hero__stat-bar {
+  flex-shrink: 0;
+  width: 5px;
+  height: 48px;
+  background: var(--color-orange-alt);
+}
+
+.pe-hero__stat p {
+  font: 600 clamp(1.05rem, 1.806vw, 1.625rem) / 1.3 var(--font-body);
+  color: var(--color-text-body);
+}
+
+/* Photo + decorative graphic (mobile default: static, stacked below content) */
+
+.pe-hero__photo {
+  position: relative;
+  z-index: 1;
+  width: min(78%, 560px);
+  height: auto;
+  margin: clamp(16px, 4vw, 32px) auto 0;
+}
+
+.pe-hero__graphic {
+  display: none;
+}
+
+/* Tablet and up: photo bleeds off the right edge behind the text, per Figma */
+
+@media (min-width: 900px) {
+  .pe-hero {
+    padding-bottom: clamp(48px, 6.74vw, 97px);
+  }
+
+  .pe-hero__content {
+    max-width: min(64.51%, 929px);
+  }
+
+  .pe-hero__photo {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    width: min(82.64%, 1190px);
+    height: auto;
+    margin: 0;
+  }
+
+  .pe-hero__graphic {
+    display: block;
+    position: absolute;
+    z-index: 4;
+    right: 0;
+    bottom: 0;
+    width: clamp(110px, 13.37vw, 192px);
+    height: auto;
+  }
+}
+
+/*
+  Below 900px: dedicated mobile hero from the Figma "Mobile View" frame
+  (node 2951:1812), derived from ITS OWN 402px baseline — this is a distinct
+  composition, not a shrunk desktop layout. Every clamp() here is calibrated
+  as clamp(min, Xvw, target) where X = target-px / 4.02, so it hits the exact
+  mobile spec at a 402px viewport and scales proportionally around it.
+*/
+
+@media (max-width: 899.98px) {
+  .pe-header__toggle {
+    display: flex;
+  }
+
+  .pe-nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    background: var(--color-white);
+    padding: 24px clamp(20px, 6vw, 40px) 28px;
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.08);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 0.3s ease, opacity 0.25s ease;
+  }
+
+  .pe-nav.is-open {
+    max-height: 420px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .pe-nav__cta {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Photo banner: bg + cropped photo + fade-to-white, cropped to a fixed
+     402:323 box so the fade (positioned in %) always lines up with the photo
+     regardless of viewport width. */
+  .pe-hero__banner {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 402 / 323;
+    overflow: hidden;
+  }
+
+  .pe-hero__banner .pe-hero__bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .pe-hero__banner .pe-hero__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: cover;
+    object-position: 78% 38%;
+  }
+
+  .pe-hero__banner .pe-hero__overlay {
+    left: 0;
+    right: 0;
+    top: 14.24%;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #fff 92%);
+  }
+
+  /* Header floats transparently over the photo banner instead of its own row */
+  .pe-header {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    z-index: 10;
+    padding: clamp(16px, 6.72vw, 32px) clamp(20px, 6.22vw, 32px) 0;
+  }
+
+  .pe-header__logo img {
+    width: clamp(120px, 45.52vw, 200px);
+  }
+
+  .pe-header__toggle span {
+    background: var(--color-navy);
+  }
+
+  /* Faint watermark behind the text block, not the photo */
+  .pe-hero__map {
+    left: -20%;
+    top: 32%;
+    width: 130%;
+    max-width: none;
+    opacity: 0.06;
+  }
+
+  /* Content is pulled up to overlap the tail of the photo fade, per spec */
+  .pe-hero__content {
+    max-width: none;
+    padding: 0 clamp(20px, 6.22vw, 32px) 0;
+    margin-top: clamp(-192px, -21.39vw, -60px);
+  }
+
+  .pe-hero__eyebrow {
+    font-size: clamp(0.95rem, 4.48vw, 1.125rem);
+    margin-bottom: clamp(6px, 2.24vw, 12px);
+  }
+
+  .pe-hero__heading {
+    margin-bottom: clamp(8px, 2.61vw, 14px);
+  }
+
+  .pe-hero__heading-accent {
+    font-size: clamp(1.8rem, 9.7vw, 2.4375rem);
+  }
+
+  .pe-hero__heading-base {
+    font-size: clamp(1.6rem, 8.21vw, 2.0625rem);
+  }
+
+  .pe-hero__divider {
+    width: 64px;
+    height: 5px;
+    margin: 0 0 clamp(10px, 3.23vw, 13px);
+  }
+
+  .pe-hero__lead {
+    max-width: none;
+    font-size: clamp(0.95rem, 5.22vw, 1.3125rem);
+    line-height: 1.43;
+  }
+
+  .pe-hero__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(14px, 4.73vw, 19px);
+    margin-top: clamp(16px, 6.47vw, 26px);
+  }
+
+  .pe-btn {
+    font-size: clamp(0.95rem, 4.98vw, 1.25rem);
+  }
+
+  .pe-hero__stat {
+    margin-top: clamp(24px, 12.44vw, 50px);
+  }
+
+  .pe-hero__stat-bar {
+    height: 47px;
+  }
+
+  .pe-hero__stat p {
+    font-size: clamp(0.9rem, 4.48vw, 1.125rem);
+    line-height: 1.39;
+  }
+
+  .pe-hero__graphic {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    width: clamp(70px, 24.63vw, 99px);
+    height: auto;
+  }
+}

@@ -1,0 +1,91 @@
+/*
+  Desktop/tablet (>=900px): a fixed 4-column strip matching the Figma frame
+  (node 2952:1900) at its 1440px baseline — clamp()s below use
+  X = target-px / 14.4 so values hit spec exactly at 1440px.
+
+  Mobile (<900px): the same 4 items become a horizontally swipeable,
+  scroll-snapping strip instead (there is no mobile frame for this section).
+*/
+
+.pe-strip {
+  background: #1e548d;
+  border-top: 3px solid var(--color-orange);
+}
+
+.pe-strip__track {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pe-strip__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 0.7vw, 10px);
+  padding: clamp(20px, 2.08vw, 30px) clamp(16px, 2.5vw, 32px);
+  white-space: nowrap;
+}
+
+.pe-strip__icon {
+  flex-shrink: 0;
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+.pe-strip__label {
+  margin: 0;
+  font: 600 clamp(0.85rem, 1.25vw, 1.125rem) var(--font-body);
+  color: var(--color-white);
+  white-space: normal;
+}
+
+/* Desktop/tablet: fixed proportional columns, matching the Figma widths
+   (385 / 359 / 311 / 385 out of 1440) via flex-grow ratios. */
+@media (min-width: 900px) {
+  .pe-strip__item:nth-child(1) {
+    flex: 385 1 0;
+  }
+
+  .pe-strip__item:nth-child(2) {
+    flex: 359 1 0;
+  }
+
+  .pe-strip__item:nth-child(3) {
+    flex: 311 1 0;
+  }
+
+  .pe-strip__item:nth-child(4) {
+    flex: 385 1 0;
+  }
+}
+
+/* Mobile: horizontally swipeable cards instead of a squeezed 4-up row */
+@media (max-width: 899.98px) {
+  .pe-strip__track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .pe-strip__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pe-strip__item {
+    flex: 0 0 auto;
+    width: min(80%, 340px);
+    scroll-snap-align: start;
+    justify-content: flex-start;
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .pe-strip__label {
+    white-space: normal;
+  }
+}
