@@ -1,0 +1,170 @@
+/*
+  Mobile (<900px) is the default here, derived from the Figma "Who we are"
+  mobile frame (node 2957:1926) at its 402px baseline — clamp()s use
+  X = target-px / 4.02.
+
+  Desktop/tablet (>=900px, below) is derived from the 1920px reference frame
+  (node 2959:1938) — see the comment on that media query for details.
+*/
+
+.pe-who {
+  position: relative;
+  overflow: hidden;
+  background: #d95800;
+  padding: clamp(28px, 10.95vw, 44px) clamp(16px, 5.47vw, 22px);
+}
+
+.pe-who__map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.pe-who__grid {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.pe-who__eyebrow {
+  font: 600 clamp(1rem, 6.47vw, 1.125rem) var(--font-body);
+  color: var(--color-white);
+  opacity: 0.7;
+  margin: 0 0 clamp(8px, 3.33vw, 10px);
+}
+
+.pe-who__heading {
+  font: 400 clamp(1.5rem, 6.47vw, 1.625rem) var(--font-display);
+  color: var(--color-white);
+  line-height: 1.15;
+  margin: 0 0 clamp(16px, 5.17vw, 21px);
+}
+
+.pe-who__image {
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: clamp(18px, 4.48vw, 24px);
+}
+
+.pe-who__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 375 / 206;
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+
+.pe-who__lead {
+  font: 400 clamp(1rem, 4.98vw, 1.25rem) / 1.7 var(--font-body);
+  color: var(--color-white);
+  margin: 0 0 clamp(20px, 7.5vw, 30px);
+}
+
+.pe-who__link {
+  display: inline-block;
+  font: 600 clamp(1rem, 4.98vw, 1.25rem) var(--font-body);
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+/*
+  >=900px is re-derived from the 1920px reference frame (node 2959:1938),
+  which the client authored specifically to fix the layout/spacing at large
+  widths — clamp()s below use X = target-px / 19.2 for anything that should
+  scale with viewport width (columns, gaps, the image, the map).
+
+  Font sizes and the vertical rhythm between text blocks are IDENTICAL
+  between the 1440 and 1920 reference frames (26/46/20/20px, same gaps) —
+  only the column widths differ between them — so those stay fixed px
+  here rather than vw-scaled; only layout width/position is fluid.
+*/
+@media (min-width: 900px) {
+  .pe-who {
+    min-height: clamp(560px, 36.82vw, 707px);
+    display: flex;
+    align-items: center;
+    padding: 40px clamp(32px, 8.44vw, 162px) 40px clamp(32px, 3.39vw, 65px);
+  }
+
+  /*
+    The image is taken out of flow (absolute + translateY centering) rather
+    than placed as a grid item spanning the header+footer rows. It matches
+    how Figma itself positions it (top:50% / -translate-y-1/2), and it
+    sidesteps a real CSS Grid pitfall: a spanning item taller than its
+    stacked siblings combined forces the grid to stretch those rows to fit
+    it — which shows up as dead space *between* header and footer instead
+    of around the image.
+  */
+  .pe-who__grid {
+    position: static;
+    display: block;
+    width: 100%;
+    padding-left: calc(clamp(280px, 41.35vw, 794px) + clamp(24px, 2.55vw, 49px));
+  }
+
+  .pe-who__header {
+    max-width: clamp(320px, 44.27vw, 850px);
+  }
+
+  .pe-who__image {
+    position: absolute;
+    left: clamp(32px, 3.39vw, 65px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(280px, 41.35vw, 794px);
+    margin: 0;
+  }
+
+  .pe-who__footer {
+    max-width: clamp(320px, 44.27vw, 850px);
+    margin-top: 24px;
+  }
+
+  .pe-who__eyebrow {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+
+  .pe-who__heading {
+    /* Fixed 46px per both reference frames from ~1100px up; only tapers
+       down in the narrow 900-1100px sliver neither frame targets, where
+       46px literally cannot fit two words per line in this column. */
+    font-size: clamp(2.25rem, 5vw - 9px, 2.875rem);
+    margin-bottom: 0;
+  }
+
+  .pe-who__image img {
+    aspect-ratio: 794 / 581;
+    object-position: 50% 30%;
+  }
+
+  .pe-who__lead {
+    font-size: 20px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .pe-who__link {
+    font-size: 20px;
+  }
+
+  /* Map is a fixed-size (1018x678) decorative asset in both reference
+     frames — only its position shifts — so it stays a constant size and
+     just tucks toward the right edge, shrinking only if that would
+     overflow a narrower desktop viewport. */
+  .pe-who__map {
+    inset: auto;
+    top: clamp(6px, 0.78vw, 15px);
+    right: clamp(16px, 6.93vw, 133px);
+    left: auto;
+    width: min(1018px, 53vw);
+    height: auto;
+    aspect-ratio: 1018 / 678;
+  }
+}

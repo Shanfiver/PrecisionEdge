@@ -9,7 +9,7 @@
 
 .pe-strip {
   background: #1e548d;
-  border-top: 3px solid var(--color-orange);
+  border-top: 5px solid var(--color-orange);
 }
 
 .pe-strip__track {
