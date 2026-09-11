@@ -1,0 +1,116 @@
+/*
+  Mobile (<900px) has no dedicated Figma frame — stacked image-then-text is
+  my own reasonable simplification, not a pixel match to anything.
+
+  Desktop/tablet (>=900px) is derived from the Figma "Insdustry" frame
+  (node 2967:233) at its 1920px baseline — clamp()s use X = target-px / 19.2.
+  As with the other 1920-anchored sections, font sizes and the small gaps
+  between text elements are fixed per spec; only the overall layout width
+  (column widths, image size) is fluid.
+*/
+
+.pe-industry {
+  position: relative;
+  overflow: hidden;
+  background: #003e81;
+  display: flex;
+  flex-direction: column;
+}
+
+.pe-industry__content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 40px 20px;
+}
+
+.pe-industry__text {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pe-industry__heading {
+  margin: 0;
+  font: 400 clamp(1.6rem, 6vw, 2.875rem) var(--font-display);
+  line-height: 1.2;
+  color: var(--color-white);
+}
+
+.pe-industry__lead {
+  margin: 0;
+  font: 400 clamp(0.95rem, 3.4vw, 1.5rem) / 1.5 var(--font-body);
+  color: var(--color-white);
+  opacity: 0.8;
+}
+
+.pe-industry__cta {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 clamp(20px, 6vw, 28px);
+  border-radius: 200px;
+  background: var(--color-white);
+  color: var(--color-navy);
+  font: 600 clamp(0.85rem, 3vw, 1.0625rem) var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.pe-industry__media {
+  order: -1;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.pe-industry__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+@media (min-width: 900px) {
+  .pe-industry {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: clamp(340px, 24.53vw, 471px);
+  }
+
+  .pe-industry__content {
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: 36px;
+    padding: 40px clamp(24px, 4.17vw, 80px);
+  }
+
+  .pe-industry__text {
+    gap: 24px;
+    max-width: clamp(420px, 45.2vw, 868px);
+  }
+
+  .pe-industry__heading {
+    font-size: 46px;
+  }
+
+  .pe-industry__lead {
+    font-size: 24px;
+    line-height: 1.45;
+  }
+
+  .pe-industry__cta {
+    height: 48px;
+    font-size: 19px;
+    padding: 0 32px;
+  }
+
+  .pe-industry__media {
+    order: 0;
+    flex: 0 0 clamp(300px, 49.375vw, 948px);
+    aspect-ratio: auto;
+    align-self: stretch;
+  }
+}
