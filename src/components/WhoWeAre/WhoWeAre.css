@@ -14,12 +14,19 @@
   padding: clamp(28px, 10.95vw, 44px) clamp(16px, 5.47vw, 22px);
 }
 
+/* Contained (not cover-cropped) and modestly sized so the dot pattern
+   renders at its natural scale instead of being zoomed into oversized
+   dots by a full-bleed cover crop. */
 .pe-who__map {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  inset: auto;
+  top: 6%;
+  right: -8%;
+  left: auto;
+  width: 65%;
+  height: auto;
+  aspect-ratio: 1018 / 678;
+  object-fit: contain;
   opacity: 0.2;
   pointer-events: none;
 }

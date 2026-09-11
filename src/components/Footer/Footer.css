@@ -1,0 +1,221 @@
+/*
+  Mobile (<900px) has no dedicated Figma frame — columns stack, vertical
+  dividers become horizontal rules, and the bottom bar centers instead of
+  spreading. A reasonable simplification, not a pixel match to anything.
+
+  Desktop/tablet (>=900px) is derived from the Figma "Footer" frame
+  (node 2975:516) at its 1920px baseline — clamp()s use X = target-px / 19.2.
+  Every text size here is 20px in the spec, so it's fixed from ~900px up;
+  only the layout width (gaps, column placement) is fluid.
+*/
+
+.pe-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: #00244a;
+  padding: 40px 20px 24px;
+}
+
+.pe-footer__row {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.pe-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pe-footer__logo {
+  width: clamp(160px, 45vw, 257px);
+  height: auto;
+}
+
+.pe-footer__tagline {
+  margin: 0;
+  font: 400 clamp(0.9rem, 4vw, 1.25rem) / 1.5 var(--font-body);
+  color: var(--color-white);
+}
+
+.pe-footer__contact {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pe-footer__contact li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pe-footer__contact img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.pe-footer__contact a,
+.pe-footer__contact span {
+  font: 600 clamp(0.85rem, 3.6vw, 1.25rem) var(--font-body);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.pe-footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pe-footer__heading {
+  margin: 0;
+  font: 600 clamp(0.95rem, 3.8vw, 1.25rem) var(--font-body);
+  color: var(--color-white);
+}
+
+.pe-footer__column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pe-footer__column a {
+  display: inline-block;
+  padding: 6px 0;
+  font: 400 clamp(0.8rem, 3vw, 1rem) var(--font-body);
+  color: var(--color-white);
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.pe-footer__bottom {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+}
+
+.pe-footer__copyright {
+  margin: 0;
+  font: 400 clamp(0.8rem, 3.2vw, 1.25rem) var(--font-body);
+  color: var(--color-white);
+}
+
+.pe-footer__copyright a {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+.pe-footer__social {
+  display: flex;
+  gap: 12px;
+}
+
+.pe-footer__social img {
+  width: 28px;
+  height: 28px;
+}
+
+@media (min-width: 900px) {
+  .pe-footer {
+    gap: 20px;
+    padding: clamp(48px, 4.01vw, 77px) clamp(32px, 3.91vw, 75px) 32px;
+  }
+
+  .pe-footer__row {
+    --footer-gap: clamp(32px, 5.885vw, 113px);
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--footer-gap);
+  }
+
+  .pe-footer__brand {
+    flex: 1 1 240px;
+    min-width: 200px;
+    max-width: 321px;
+    gap: 22px;
+  }
+
+  .pe-footer__logo {
+    width: 257px;
+  }
+
+  .pe-footer__tagline {
+    font-size: 20px;
+  }
+
+  .pe-footer__contact {
+    gap: 16px;
+  }
+
+  .pe-footer__contact img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .pe-footer__contact a,
+  .pe-footer__contact span {
+    font-size: 20px;
+  }
+
+  .pe-footer__column {
+    position: relative;
+    flex: 1 1 130px;
+    min-width: 0;
+    gap: 12px;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .pe-footer__column::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--footer-gap) / -2);
+    width: 1px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .pe-footer__heading {
+    font-size: 20px;
+  }
+
+  .pe-footer__column a {
+    padding: 0;
+    line-height: 38px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .pe-footer__bottom {
+    padding-top: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .pe-footer__copyright {
+    font-size: 20px;
+  }
+
+  .pe-footer__social img {
+    width: 32px;
+    height: 32px;
+  }
+}

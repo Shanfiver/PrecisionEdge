@@ -1,0 +1,111 @@
+/*
+  Mobile (<900px) has no dedicated Figma frame — stacked text-then-button is
+  a reasonable simplification, not a pixel match to anything.
+
+  Desktop/tablet (>=900px) is derived from the Figma "CTA" frame
+  (node 2974:335) at its 1920px baseline — clamp()s use X = target-px / 19.2.
+  Font sizes and the gap between heading/paragraph are fixed per spec; only
+  the overall layout width (padding, max-widths) is fluid. The background
+  image already has the navy fade baked in, so the section's own background
+  color just needs to match it for a seamless blend past the image's edge.
+*/
+
+.pe-cta {
+  position: relative;
+  overflow: hidden;
+  background: #003e81;
+  display: flex;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.pe-cta__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  pointer-events: none;
+}
+
+.pe-cta__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+}
+
+.pe-cta__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pe-cta__heading {
+  margin: 0;
+  font: 400 clamp(1.5rem, 6vw, 2.5rem) var(--font-display);
+  line-height: 1.2;
+  color: #fffafa;
+}
+
+.pe-cta__lead {
+  margin: 0;
+  font: 400 clamp(0.95rem, 4vw, 1.75rem) / 1.5 var(--font-body);
+  color: var(--color-white);
+}
+
+.pe-cta__button {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 28px;
+  border-radius: 200px;
+  background: var(--color-white);
+  color: var(--color-navy);
+  font: 600 clamp(0.85rem, 3.5vw, 1.1875rem) var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .pe-cta {
+    min-height: clamp(280px, 20.89vw, 401px);
+    padding: 0;
+  }
+
+  .pe-cta__content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 0 clamp(24px, 4.17vw, 80px) 0 clamp(180px, 26.4vw, 507px);
+  }
+
+  .pe-cta__text {
+    gap: 24px;
+  }
+
+  .pe-cta__heading {
+    font-size: 40px;
+    max-width: clamp(280px, 36.25vw, 696px);
+  }
+
+  .pe-cta__lead {
+    font-size: 28px;
+    max-width: clamp(320px, 56.82vw, 1091px);
+  }
+
+  .pe-cta__button {
+    align-self: center;
+    flex-shrink: 0;
+    height: 48px;
+    padding: 0 30px;
+    font-size: 19px;
+  }
+}

@@ -61,15 +61,15 @@
   }
 }
 
-/* Mobile: horizontally swipeable cards instead of a squeezed 4-up row */
+/* Mobile: horizontally swipeable, but still flush-edge color blocks like
+   desktop — no card gaps or rounded corners, just a scrollable version of
+   the same strip. */
 @media (max-width: 899.98px) {
   .pe-strip__track {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    gap: 12px;
-    padding: 16px 20px;
   }
 
   .pe-strip__track::-webkit-scrollbar {
@@ -81,8 +81,6 @@
     width: min(80%, 340px);
     scroll-snap-align: start;
     justify-content: flex-start;
-    border-radius: 12px;
-    padding: 18px 20px;
   }
 
   .pe-strip__label {

@@ -22,7 +22,7 @@ export default function WhoWeAre() {
 
         <div className="pe-who__footer">
           <p className="pe-who__lead">
-            Precision Edge Engineering is a dedicated structural steel detailing company
+            Precision Edge is a dedicated structural steel detailing company
             delivering accurate, reliable and cost-effective detailing solutions to fabricators,
             contractors and engineering firms worldwide. We combine industry knowledge, advanced
             detailing technologies and a quality-focused workflow to support successful

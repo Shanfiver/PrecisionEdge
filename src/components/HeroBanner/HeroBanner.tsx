@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from '../../assets/pe-logo-color-hor.svg'
 import heroBg from '../../assets/hero-bg-clouds.png'
 import heroPhoto from '../../assets/hero-image.png'
@@ -30,6 +30,13 @@ function ArrowIcon() {
 
 export default function HeroBanner() {
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
 
   return (
     <section className="pe-hero">
