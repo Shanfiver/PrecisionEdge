@@ -1,0 +1,64 @@
+/*
+  Shared "eyebrow / heading / lead" intro used by the 1920px-anchored
+  sections (Our Core Services, Technology & Process, ...). Font sizes and
+  gaps are fixed per spec from ~900px up; only max-widths are fluid.
+  See Services.css for the general fixed-type/fluid-layout rationale.
+*/
+
+.pe-section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 720px;
+  text-align: center;
+}
+
+.pe-section-header__eyebrow {
+  margin: 0;
+  font: 600 clamp(1rem, 4.5vw, 1.625rem) var(--font-body);
+  color: #282828;
+  opacity: 0.7;
+}
+
+.pe-section-header__heading {
+  margin: 0;
+  font: 400 clamp(1.6rem, 6vw, 2.875rem) var(--font-display);
+  line-height: 1.2;
+}
+
+.pe-section-header__heading-accent {
+  color: var(--color-navy);
+}
+
+.pe-section-header__heading-base {
+  color: #484848;
+}
+
+.pe-section-header__lead {
+  margin: 0;
+  max-width: 620px;
+  font: 400 clamp(0.95rem, 3.2vw, 1.5rem) / 1.5 var(--font-body);
+  color: #000;
+}
+
+@media (min-width: 900px) {
+  .pe-section-header {
+    gap: 20px;
+    max-width: clamp(500px, 72.24vw, 1387px);
+  }
+
+  .pe-section-header__eyebrow {
+    font-size: 26px;
+  }
+
+  .pe-section-header__heading {
+    font-size: 46px;
+  }
+
+  .pe-section-header__lead {
+    max-width: clamp(400px, 67.76vw, 1301px);
+    font-size: 24px;
+    line-height: 1.4;
+  }
+}

@@ -1,3 +1,4 @@
+import SectionHeader from '../SectionHeader/SectionHeader'
 import bgGraphic from '../../assets/Services-bg.png'
 import modelingImg from '../../assets/3D Modeling & BIM.png'
 import detailingImg from '../../assets/Structural Steel Detailing.png'
@@ -38,18 +39,14 @@ export default function Services() {
       <img className="pe-services__bg" src={bgGraphic} alt="" aria-hidden="true" />
 
       <div className="pe-services__inner">
-        <div className="pe-services__header">
-          <p className="pe-services__eyebrow">OUR CORE SERVICES</p>
-          <h2 className="pe-services__heading">
-            <span className="pe-services__heading-accent">BUILT ON DETAIL </span>
-            <span className="pe-services__heading-base">DELIVERED WITH PRECISION</span>
-          </h2>
-          <p className="pe-services__lead">
-            From 3D modeling and BIM coordination to structural steel detailing, quality checking
+        <SectionHeader
+          eyebrow="OUR CORE SERVICES"
+          headingAccent="BUILT ON DETAIL "
+          headingBase="DELIVERED WITH PRECISION"
+          lead="From 3D modeling and BIM coordination to structural steel detailing, quality checking
             and fabrication support, we provide end-to-end solutions designed to move projects
-            forward with clarity and confidence.
-          </p>
-        </div>
+            forward with clarity and confidence."
+        />
 
         <div className="pe-services__grid">
           {SERVICES.map((service) => (
