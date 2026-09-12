@@ -207,7 +207,7 @@
 .pe-hero__content-slides {
   position: relative;
   overflow: hidden;
-  min-height: clamp(500px, 44vw, 620px);
+  min-height: clamp(510px, 45vw, 650px);
 }
 
 /* Simple slide: the incoming pane travels in from the right while the
@@ -601,7 +601,7 @@
      sized to fit its own (placeholder) copy — see the comment on the base
      .pe-hero__content-slides rule. */
   .pe-hero__content-slides {
-    min-height: clamp(420px, 118vw, 500px);
+    min-height: clamp(470px, 132vw, 560px);
     margin-top: clamp(-192px, -21.39vw, -60px);
   }
 
