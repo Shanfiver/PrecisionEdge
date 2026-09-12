@@ -60,3 +60,48 @@ p {
   min-height: 100svh;
   overflow-x: hidden;
 }
+
+/* Focus visibility, applied site-wide so every button/link gets a
+   consistent, accessible keyboard focus ring instead of the browser default. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Scroll-reveal groups: a container gets `.pe-reveal-group`, its animated
+   children get `.pe-reveal-item`. JS (useRevealOnScroll) adds `.is-visible`
+   to the container the first time it enters the viewport; children then
+   fade/slide in with a stagger driven by nth-child below. Guarded so
+   reduced-motion users see final-state content immediately, no motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .pe-reveal-group .pe-reveal-item {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .pe-reveal-group.is-visible .pe-reveal-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .pe-reveal-group .pe-reveal-item:nth-child(1) { transition-delay: 0ms; }
+  .pe-reveal-group .pe-reveal-item:nth-child(2) { transition-delay: 90ms; }
+  .pe-reveal-group .pe-reveal-item:nth-child(3) { transition-delay: 180ms; }
+  .pe-reveal-group .pe-reveal-item:nth-child(4) { transition-delay: 270ms; }
+  .pe-reveal-group .pe-reveal-item:nth-child(5) { transition-delay: 360ms; }
+  .pe-reveal-group .pe-reveal-item:nth-child(6) { transition-delay: 450ms; }
+
+  @keyframes pe-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

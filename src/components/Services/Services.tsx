@@ -1,4 +1,5 @@
 import SectionHeader from '../SectionHeader/SectionHeader'
+import { useRevealOnScroll } from '../../hooks/useRevealOnScroll'
 import bgGraphic from '../../assets/Services-bg.png'
 import modelingImg from '../../assets/3D Modeling & BIM.png'
 import detailingImg from '../../assets/Structural Steel Detailing.png'
@@ -34,6 +35,8 @@ const SERVICES = [
 ] as const
 
 export default function Services() {
+  const { ref, visible } = useRevealOnScroll<HTMLDivElement>()
+
   return (
     <section className="pe-services">
       <img className="pe-services__bg" src={bgGraphic} alt="" aria-hidden="true" />
@@ -48,9 +51,9 @@ export default function Services() {
             forward with clarity and confidence."
         />
 
-        <div className="pe-services__grid">
+        <div ref={ref} className={`pe-services__grid pe-reveal-group${visible ? ' is-visible' : ''}`}>
           {SERVICES.map((service) => (
-            <article key={service.title} className="pe-service-card">
+            <article key={service.title} className="pe-service-card pe-reveal-item">
               <div className={`pe-service-card__media pe-service-card__media--${service.variant}`}>
                 <img src={service.image} alt="" />
               </div>

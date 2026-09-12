@@ -1,4 +1,5 @@
 import SectionHeader from '../SectionHeader/SectionHeader'
+import { useRevealOnScroll } from '../../hooks/useRevealOnScroll'
 import checkIcon from '../../assets/icons/01-model-checking.png'
 import reviewIcon from '../../assets/icons/02-drawing-review.png'
 import loopIcon from '../../assets/icons/03-revision.png'
@@ -38,6 +39,8 @@ const STEPS = [
 ] as const
 
 export default function TechProcess() {
+  const { ref, visible } = useRevealOnScroll<HTMLDivElement>()
+
   return (
     <section className="pe-tech">
       <div className="pe-tech__inner">
@@ -49,9 +52,9 @@ export default function TechProcess() {
             checks to deliver accurate, coordinated and fabrication-ready solutions."
         />
 
-        <div className="pe-tech__steps">
+        <div ref={ref} className={`pe-tech__steps pe-reveal-group${visible ? ' is-visible' : ''}`}>
           {STEPS.map((step) => (
-            <div key={step.title} className="pe-tech-step">
+            <div key={step.title} className="pe-tech-step pe-reveal-item">
               <img className="pe-tech-step__icon" src={step.icon} alt="" aria-hidden="true" />
               <h3 className="pe-tech-step__title">{step.title}</h3>
               <p className="pe-tech-step__description">{step.description}</p>

@@ -71,6 +71,16 @@
   font: 600 clamp(0.85rem, 3.5vw, 1.1875rem) var(--font-body);
   text-decoration: none;
   white-space: nowrap;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.pe-cta__button:hover,
+.pe-cta__button:focus-visible {
+  background: var(--color-orange);
+  color: var(--color-white);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }
 
 @media (min-width: 900px) {
