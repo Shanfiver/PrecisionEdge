@@ -13,9 +13,24 @@
   isolation: isolate;
 }
 
+/*
+  Art layer: the photo/bg/overlay for all 4 slides, absolutely covering the
+  whole section (inset:0 of .pe-hero) so it extends behind the header too —
+  that's what keeps the nav bar see-through instead of sitting on a solid
+  band. .pe-hero__content-slides (further down) is a separate, later box
+  that only covers the text area below the header.
+*/
+.pe-hero__art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
 /* Desktop: purely a passthrough so .pe-hero__bg/__photo/__overlay lay out
-   as direct children of .pe-hero, exactly as before. Mobile repurposes it
-   as the cropped photo-banner box (see the <900px block at the bottom). */
+   as direct children of .pe-hero__slide (and therefore fill .pe-hero__art).
+   Mobile keeps this passthrough too — see the <900px block, which sizes
+   .pe-hero__art itself via aspect-ratio instead of sizing this element. */
 .pe-hero__banner {
   display: contents;
 }
@@ -36,6 +51,9 @@
   z-index: 2;
 }
 
+/* Faint world-map watermark behind the text block — a single static layer
+   shared by every slide (not part of the per-slide art), positioned
+   relative to .pe-hero as a whole. */
 .pe-hero__map {
   position: absolute;
   left: 0;
@@ -174,6 +192,55 @@
   box-shadow: 0 8px 16px rgba(0, 62, 129, 0.25);
 }
 
+/*
+  Content slider. This is a separate box from .pe-hero__art, placed after
+  the header in normal flow (so it starts below the header, not behind it)
+  — it's what actually gives .pe-hero its height, since .pe-hero__art is
+  absolute and just matches whatever that ends up being. Its slides are
+  stacked with position:absolute to slide past each other, which means none
+  of them can contribute height on their own, hence the min-height. Sized to
+  fit the current (placeholder, identical-per-slide) copy — once real
+  per-slide content lands, keep it roughly the same length or nudge this to
+  match.
+*/
+.pe-hero__content-slides {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(500px, 44vw, 620px);
+}
+
+/* Simple slide: the incoming pane travels in from the right while the
+   outgoing one is pushed out the same way, in lock-step since both
+   .pe-hero__art's and .pe-hero__content-slides' panes share this class and
+   change .is-active together. */
+.pe-hero__slide {
+  position: absolute;
+  inset: 0;
+  transform: translateX(100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pe-hero__slide.is-active {
+  transform: translateX(0);
+  z-index: 2;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pe-hero__slide {
+    transition: transform 0.6s ease;
+  }
+}
+
+/* One-time entrance on page load (not scroll-triggered — hero is already
+   in view). */
+@media (prefers-reduced-motion: no-preference) {
+  .pe-header {
+    animation: pe-fade-up 0.7s ease both;
+  }
+}
+
 /* Content */
 
 .pe-hero__content {
@@ -219,7 +286,7 @@
 .pe-hero__lead {
   font: 600 clamp(1.05rem, 1.806vw, 1.625rem) / 1.3 var(--font-body);
   color: var(--color-text-body);
-  max-width: 471px;
+ 
 }
 
 .pe-hero__actions {
@@ -314,45 +381,84 @@
   display: none;
 }
 
-/* One-time entrance on page load (not scroll-triggered — hero is already
-   in view) for the header and each content block, staggered top to bottom. */
-@media (prefers-reduced-motion: no-preference) {
-  .pe-header,
-  .pe-hero__eyebrow,
-  .pe-hero__heading,
-  .pe-hero__divider,
-  .pe-hero__lead,
-  .pe-hero__actions,
-  .pe-hero__stat {
-    animation: pe-fade-up 0.7s ease both;
+/* Slider controls — positioned relative to .pe-hero itself so they stay
+   pinned to the art/photo area regardless of how tall the text content is. */
+
+.pe-hero__dots {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(14px, 3vw, 24px);
+  transform: translateX(-50%);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pe-hero__dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 62, 129, 0.25);
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.pe-hero__dot:hover,
+.pe-hero__dot:focus-visible {
+  background: var(--color-orange);
+}
+
+.pe-hero__dot.is-active {
+  background: var(--color-orange);
+  transform: scale(1.35);
+}
+
+.pe-hero__arrow {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .pe-hero__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 62, 129, 0.15);
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--color-navy);
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+      transform 0.2s ease;
   }
 
-  .pe-header {
-    animation-delay: 0ms;
+  .pe-hero__arrow:hover,
+  .pe-hero__arrow:focus-visible {
+    background: var(--color-orange);
+    border-color: var(--color-orange);
+    color: var(--color-white);
+    transform: translateY(-50%) scale(1.08);
   }
 
-  .pe-hero__eyebrow {
-    animation-delay: 120ms;
+  .pe-hero__arrow--prev {
+    left: clamp(12px, 1.8vw, 28px);
   }
 
-  .pe-hero__heading {
-    animation-delay: 200ms;
+  .pe-hero__arrow--prev svg {
+    transform: scaleX(-1);
   }
 
-  .pe-hero__divider {
-    animation-delay: 280ms;
-  }
-
-  .pe-hero__lead {
-    animation-delay: 340ms;
-  }
-
-  .pe-hero__actions {
-    animation-delay: 420ms;
-  }
-
-  .pe-hero__stat {
-    animation-delay: 500ms;
+  .pe-hero__arrow--next {
+    right: clamp(12px, 1.8vw, 28px);
   }
 }
 
@@ -442,15 +548,12 @@
     text-align: center;
   }
 
-  /* Photo banner: bg + cropped photo + fade-to-white, cropped to a fixed
-     402:323 box so the fade (positioned in %) always lines up with the photo
-     regardless of viewport width. */
-  .pe-hero__banner {
-    display: block;
+  /* Header is absolute here (below), out of flow, so .pe-hero__art is the
+     only thing that needs to establish the banner-photo box height — same
+     402:323 crop ratio the mobile Figma frame uses. */
+  .pe-hero__art {
     position: relative;
-    width: 100%;
     aspect-ratio: 402 / 323;
-    overflow: hidden;
   }
 
   .pe-hero__banner .pe-hero__bg {
@@ -477,6 +580,18 @@
     top: 14.24%;
     bottom: 0;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #fff 92%);
+  }
+
+  /* Content box is pulled up to overlap the tail of the photo fade, then
+     sized to fit its own (placeholder) copy — see the comment on the base
+     .pe-hero__content-slides rule. */
+  .pe-hero__content-slides {
+    min-height: clamp(340px, 92vw, 420px);
+    margin-top: clamp(-192px, -21.39vw, -60px);
+  }
+
+  .pe-hero__dots {
+    bottom: clamp(10px, 2.5vw, 16px);
   }
 
   /* Header floats transparently over the top of the banner, which is now
@@ -513,11 +628,9 @@
     opacity: 0.06;
   }
 
-  /* Content is pulled up to overlap the tail of the photo fade, per spec */
   .pe-hero__content {
     max-width: none;
     padding: 0 clamp(20px, 6.22vw, 32px) 0;
-    margin-top: clamp(-192px, -21.39vw, -60px);
   }
 
   .pe-hero__eyebrow {
@@ -549,15 +662,27 @@
     line-height: 1.43;
   }
 
+  /* CTAs stay on one line: each button shares the row equally, with
+     smaller type/padding than desktop so both fit without wrapping. */
   .pe-hero__actions {
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(14px, 4.73vw, 19px);
+    flex-wrap: nowrap;
+    gap: 6px;
     margin-top: clamp(16px, 6.47vw, 26px);
   }
 
-  .pe-btn {
-    font-size: clamp(0.95rem, 4.98vw, 1.25rem);
+  .pe-hero__actions .pe-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    overflow: hidden;
+    gap: 4px;
+    padding: 10px 6px;
+    font-size: clamp(0.44rem, 2vw, 0.56rem);
+  }
+
+  .pe-hero__actions .pe-btn__arrow {
+    width: 14px;
+    height: 14px;
   }
 
   .pe-hero__stat {
