@@ -84,7 +84,11 @@ button:focus-visible {
 
   .pe-reveal-group.is-visible .pe-reveal-item {
     opacity: 1;
-    transform: translateY(0);
+    /* `none`, not `translateY(0)` — any non-none transform (even a zero
+       offset) makes the element a containing block for fixed/absolute
+       descendants, which broke the mobile nav menu when the same mistake
+       was on .pe-header's fade-up (see pe-fade-up below). */
+    transform: none;
   }
 
   .pe-reveal-group .pe-reveal-item:nth-child(1) { transition-delay: 0ms; }
@@ -101,7 +105,7 @@ button:focus-visible {
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
   }
 }

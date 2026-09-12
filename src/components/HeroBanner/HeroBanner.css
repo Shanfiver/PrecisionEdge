@@ -90,7 +90,8 @@
 }
 
 .pe-header__logo img {
-  width: clamp(150px, 20.76vw, 299px);
+  /* 70% of the original Figma-spec size (was clamp(150px, 20.76vw, 299px)) */
+  width: clamp(105px, 14.53vw, 209px);
   height: auto;
 }
 
@@ -222,7 +223,7 @@
 }
 
 .pe-hero__slide.is-active {
-  transform: translateX(0);
+  transform: none;
   z-index: 2;
   pointer-events: auto;
 }
@@ -234,10 +235,24 @@
 }
 
 /* One-time entrance on page load (not scroll-triggered — hero is already
-   in view). */
+   in view). Opacity-only, deliberately not reusing pe-fade-up: a CSS
+   animation targeting `transform` makes the element a containing block for
+   fixed-position descendants for as long as the animation holds a value
+   (including via fill-mode, even at a zero/`none` offset) — .pe-header
+   contains the fixed, full-screen mobile nav, and a transform here quietly
+   shrank that menu down to the header's own (short) box. */
+@keyframes pe-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .pe-header {
-    animation: pe-fade-up 0.7s ease both;
+    animation: pe-fade-in 0.7s ease both;
   }
 }
 
@@ -586,7 +601,7 @@
      sized to fit its own (placeholder) copy — see the comment on the base
      .pe-hero__content-slides rule. */
   .pe-hero__content-slides {
-    min-height: clamp(340px, 92vw, 420px);
+    min-height: clamp(420px, 118vw, 500px);
     margin-top: clamp(-192px, -21.39vw, -60px);
   }
 
@@ -606,7 +621,8 @@
   }
 
   .pe-header__logo img {
-    width: clamp(120px, 45.52vw, 200px);
+    /* 70% of the original mobile size (was clamp(120px, 45.52vw, 200px)) */
+    width: clamp(84px, 31.86vw, 140px);
   }
 
   .pe-header__toggle span {
@@ -662,27 +678,21 @@
     line-height: 1.43;
   }
 
-  /* CTAs stay on one line: each button shares the row equally, with
-     smaller type/padding than desktop so both fit without wrapping. */
+  /* Stacked, full-width CTAs: each button spans the content width rather
+     than sizing to its own text, so the two stay visually balanced. */
   .pe-hero__actions {
-    flex-wrap: nowrap;
-    gap: 6px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(14px, 4.73vw, 19px);
     margin-top: clamp(16px, 6.47vw, 26px);
   }
 
   .pe-hero__actions .pe-btn {
-    flex: 1 1 0;
-    min-width: 0;
     justify-content: center;
-    overflow: hidden;
-    gap: 4px;
-    padding: 10px 6px;
-    font-size: clamp(0.44rem, 2vw, 0.56rem);
   }
 
-  .pe-hero__actions .pe-btn__arrow {
-    width: 14px;
-    height: 14px;
+  .pe-btn {
+    font-size: clamp(0.95rem, 4.98vw, 1.25rem);
   }
 
   .pe-hero__stat {

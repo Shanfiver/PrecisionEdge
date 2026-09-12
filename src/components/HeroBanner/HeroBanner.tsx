@@ -7,6 +7,7 @@ import heroPhoto3 from '../../assets/hero-slide-3.png'
 import heroPhoto4 from '../../assets/hero-slide-4.png'
 import heroMap from '../../assets/map.png'
 import heroGraphic from '../../assets/graphic-hero.png'
+import btnArrow from '../../assets/icons/btn-arrow.svg'
 import './HeroBanner.css'
 
 const NAV_LINKS = [
@@ -72,21 +73,6 @@ const SLIDES = [
 ]
 
 const AUTOPLAY_MS = 6500
-
-function ArrowIcon() {
-  return (
-    <svg className="pe-btn__arrow" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-      <circle cx="13" cy="13" r="13" fill="white" />
-      <path
-        d="M8.5 13H17.5M17.5 13L13.5 9M17.5 13L13.5 17"
-        stroke="#E06B1B"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
 
 function ChevronIcon() {
   return (
@@ -183,11 +169,7 @@ export default function HeroBanner() {
 
         <nav className={`pe-nav${menuOpen ? ' is-open' : ''}`}>
           {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className={link.label === 'SERVICES' ? 'is-active' : undefined}
-            >
+            <a key={link.label} href={link.href}>
               {link.label}
             </a>
           ))}
@@ -221,7 +203,7 @@ export default function HeroBanner() {
                 <div className="pe-hero__actions">
                   <a href="#contact" className="pe-btn pe-btn--primary" tabIndex={isActive ? undefined : -1}>
                     CONNECT WITH US
-                    <ArrowIcon />
+                    <img className="pe-btn__arrow" src={btnArrow} alt="" aria-hidden="true" width={26} height={26} />
                   </a>
                   <a href="#services" className="pe-btn pe-btn--secondary" tabIndex={isActive ? undefined : -1}>
                     EXPLORE OUR SERVICES
