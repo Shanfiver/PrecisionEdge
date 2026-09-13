@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import logo from '../../assets/pe-logo-color-hor.svg'
 import heroBg from '../../assets/hero-bg-clouds.png'
 import heroPhoto1 from '../../assets/hero-slide-1.png'
@@ -173,9 +174,9 @@ export default function HeroBanner() {
               {link.label}
             </a>
           ))}
-          <a href="#contact" className="pe-nav__cta">
+          <Link to="/contact" className="pe-nav__cta">
             CONTACT US
-          </a>
+          </Link>
         </nav>
       </header>
 
@@ -201,10 +202,10 @@ export default function HeroBanner() {
                 <p className="pe-hero__lead">{slide.lead}</p>
 
                 <div className="pe-hero__actions">
-                  <a href="#contact" className="pe-btn pe-btn--primary" tabIndex={isActive ? undefined : -1}>
+                  <Link to="/contact" className="pe-btn pe-btn--primary" tabIndex={isActive ? undefined : -1}>
                     CONNECT WITH US
                     <img className="pe-btn__arrow" src={btnArrow} alt="" aria-hidden="true" width={26} height={26} />
-                  </a>
+                  </Link>
                   <a href="#services" className="pe-btn pe-btn--secondary" tabIndex={isActive ? undefined : -1}>
                     EXPLORE OUR SERVICES
                   </a>

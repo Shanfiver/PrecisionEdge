@@ -1,0 +1,185 @@
+/*
+  Solid-background counterpart to the transparent header embedded in
+  HeroBanner.css — same 1440px-baseline clamp() convention
+  (clamp(min, Xvw, target) where X = target-px / 14.4), same class names
+  where they overlap so both headers stay visually consistent.
+*/
+
+.pe-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(16px, 2.36vw, 34px) clamp(20px, 5.76vw, 83px);
+}
+
+.pe-header--solid {
+  background: var(--color-white);
+}
+
+.pe-header__logo {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+  transition: opacity 0.2s ease;
+}
+
+.pe-header__logo:hover,
+.pe-header__logo:focus-visible {
+  opacity: 0.8;
+}
+
+.pe-header__logo img {
+  width: clamp(105px, 14.53vw, 209px);
+  height: auto;
+}
+
+.pe-header__toggle {
+  display: none;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 21;
+}
+
+.pe-header__toggle span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--color-text-dark);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.2s ease;
+}
+
+.pe-header__toggle:hover span {
+  background: var(--color-orange);
+}
+
+.pe-header__toggle.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.pe-header__toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.pe-header__toggle.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.pe-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.78vw, 40px);
+}
+
+.pe-nav a {
+  position: relative;
+  font: 600 clamp(0.9rem, 1.25vw, 1.125rem) var(--font-body);
+  color: var(--color-text-dark);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.pe-nav a:not(.pe-nav__cta)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.pe-nav a:not(.pe-nav__cta):hover,
+.pe-nav a:not(.pe-nav__cta):focus-visible {
+  color: var(--color-navy);
+}
+
+.pe-nav a:not(.pe-nav__cta):hover::after,
+.pe-nav a:not(.pe-nav__cta):focus-visible::after {
+  transform: scaleX(1);
+}
+
+.pe-nav__cta {
+  background: var(--color-orange);
+  color: var(--color-white) !important;
+  padding: 12px 28px;
+  border-radius: 70px;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pe-nav__cta:hover,
+.pe-nav__cta:focus-visible {
+  background: var(--color-navy);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 62, 129, 0.25);
+}
+
+@media (max-width: 899.98px) {
+  .pe-header__toggle {
+    display: flex;
+  }
+
+  .pe-header__toggle span {
+    background: var(--color-text-dark);
+  }
+
+  .pe-header__toggle.is-open span {
+    background: var(--color-navy);
+  }
+
+  .pe-header__logo img {
+    width: clamp(84px, 31.86vw, 140px);
+  }
+
+  /* Full-page overlay menu rather than a dropdown: fixed to the viewport,
+     brand-navy background, centered white links. Matches HeroBanner's
+     mobile nav so the two headers behave identically. */
+  .pe-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 29;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    background: var(--color-navy);
+    padding: 100px 24px 48px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .pe-nav.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .pe-nav a {
+    font-size: 1.25rem;
+    color: var(--color-white);
+  }
+
+  .pe-nav__cta {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+}

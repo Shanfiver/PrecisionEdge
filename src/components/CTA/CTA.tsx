@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useRevealOnScroll } from '../../hooks/useRevealOnScroll'
 import ctaBg from '../../assets/CTA-bg.png'
 import './CTA.css'
@@ -18,9 +19,9 @@ export default function CTA() {
           </p>
         </div>
 
-        <a href="#contact" className="pe-cta__button pe-reveal-item">
+        <Link to="/contact" className="pe-cta__button pe-reveal-item">
           CONTACT US
-        </a>
+        </Link>
       </div>
     </section>
   )

@@ -51,7 +51,7 @@ export default function Footer() {
             </li>
             <li>
               <img src={emailIcon} alt="" aria-hidden="true" />
-              <a href="mailto:info@precision-edge.in">info@precision-edge.in</a>
+              <a href="mailto:contact@precision-edge.in">contact@precision-edge.in</a>
             </li>
             <li>
               <img src={locationIcon} alt="" aria-hidden="true" />

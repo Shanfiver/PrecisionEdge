@@ -1,0 +1,142 @@
+.pe-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pe-contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pe-contact-form__field label {
+  font: 600 0.8rem var(--font-body);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.pe-contact-form__field label span {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  opacity: 0.75;
+}
+
+.pe-contact-form__field input,
+.pe-contact-form__field textarea {
+  font: 400 1rem var(--font-body);
+  color: var(--color-text-dark);
+  background: var(--color-white);
+  border: 1px solid rgba(38, 38, 38, 0.16);
+  border-radius: 10px;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pe-contact-form__field textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: var(--font-body);
+}
+
+.pe-contact-form__field input::placeholder,
+.pe-contact-form__field textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.pe-contact-form__field input:focus,
+.pe-contact-form__field textarea:focus {
+  border-color: var(--color-navy);
+  box-shadow: 0 0 0 3px rgba(40, 96, 157, 0.12);
+}
+
+.pe-contact-form__field input[aria-invalid='true'],
+.pe-contact-form__field textarea[aria-invalid='true'] {
+  border-color: #c0392b;
+}
+
+.pe-contact-form__field input[aria-invalid='true']:focus,
+.pe-contact-form__field textarea[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.14);
+}
+
+.pe-contact-form__error {
+  font: 400 0.8125rem var(--font-body);
+  color: #c0392b;
+}
+
+.pe-contact-form__error--general {
+  padding: 12px 14px;
+  background: rgba(192, 57, 43, 0.06);
+  border: 1px solid rgba(192, 57, 43, 0.2);
+  border-radius: 10px;
+}
+
+.pe-contact-form__error--general a {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+/* Honeypot — off-screen rather than display:none, which some spam bots
+   skip when deciding whether to fill a field. */
+.pe-contact-form__honey {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pe-contact-form .pe-btn {
+  align-self: flex-start;
+}
+
+.pe-contact-form .pe-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.pe-contact-form__success {
+  border: 1px solid rgba(224, 107, 27, 0.3);
+  background: rgba(224, 107, 27, 0.06);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.pe-contact-form__success-title {
+  font: 600 1.0625rem var(--font-body);
+  color: var(--color-text-dark);
+  margin-bottom: 6px;
+}
+
+.pe-contact-form__success-body {
+  font: 400 0.9375rem var(--font-body);
+  color: var(--color-text-muted);
+}
+
+.pe-contact-form__reset {
+  margin-top: 20px;
+  border: none;
+  background: none;
+  padding: 0;
+  font: 600 0.9375rem var(--font-body);
+  color: var(--color-navy);
+  cursor: pointer;
+}
+
+.pe-contact-form__reset:hover,
+.pe-contact-form__reset:focus-visible {
+  color: var(--color-orange);
+}
